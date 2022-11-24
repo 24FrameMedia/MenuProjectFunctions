@@ -1,0 +1,158 @@
+#include <iostream>
+#include <vector>
+#include <cctype>
+#include <string>
+using namespace std;
+
+//Function Prototypes:
+void printMenu();
+void stringToUpper(string&);
+char getSelection();
+void displayList(const vector<double>&);
+void addNumber(vector<double>&);
+void removeNumber(vector<double>&);
+void largestNum(vector<double>&);
+void smallestNum(vector<double>&);
+void meanOfNums(vector<double>&);
+void printList(const vector<double>&);
+
+int main() {
+	char selection{};
+	string userString{};
+	vector<double> vec{};
+	
+	do {
+		printMenu();
+		selection = getSelection();
+		switch (selection) {
+			case '1':
+				stringToUpper(userString);
+				break;
+			case '2':
+				displayList(vec);
+				break;
+			case '3':
+				addNumber(vec);
+				break;
+			case '4':
+				cout << "Still in development" << endl << endl;
+				//removeNumber(vec);
+				break;
+			case '5':
+				largestNum(vec);
+				break;
+			case '6':
+				smallestNum(vec);
+				break;
+			case '7':
+				meanOfNums(vec);
+				break;
+		};
+	}
+	while (selection != 'Q' && selection != 'q');
+
+	return 0;
+};
+
+//Function Definitions:
+void printMenu() {
+	cout << "Make a selection from the following options:" << endl << endl;
+
+	cout << "1 - Make a string uppercase" << endl
+		<< "2 - Display list of numbers" << endl
+		<< "3 - Add a new number to the list" << endl
+		<< "4 - Remove a number from the list" << endl
+		<< "5 - Display the largest number" << endl
+		<< "6 - Display the smallest number" << endl
+		<< "7 - Display the mean of the numbers" << endl
+		<< "Q - Quit Program" << endl << endl;
+};
+
+char getSelection() {
+	char userChar{};
+	cin >> userChar;
+	cout << endl;
+	return userChar;
+};
+
+void stringToUpper(string &userString) {
+	string upperString{};
+	cout << "Enter a string to convert it to all uppercase: " << endl;
+	cin.ignore(); 
+	getline(cin, userString);
+	for (char i{}; i < userString.length(); i++) {
+		upperString += toupper(userString[i]);
+	};
+	cout << upperString << endl << endl;
+};
+
+void addNumber(vector<double> &vec) {
+	double userNum{};
+	cout << "Enter a number to add to the vector: ";
+	cin >> userNum;
+	vec.push_back(userNum);
+};
+
+/*void removeNumber(vector<double>& vec) {
+	double userNum{};
+	cout << "Enter a number to remove from the vector: ";
+	cin >> userNum;
+	auto i = find(vec.begin(), vec.end(), userNum);
+	if (i != vec.end()) {
+		swap(double vec[i], vec.back());
+		vec.pop_back();
+	}
+};*/
+
+void displayList(const vector<double> &vec) {
+	if (vec.size() == 0) {
+		cout << "Error - The list is empty!" << endl << endl;
+	}
+	else {
+		printList(vec);
+	};
+};
+
+void largestNum(vector<double>& vec) {
+	double largestNum{ vec[0] };
+	for (size_t i{1}; i < vec.size(); i++) {
+		if (vec[i] > largestNum) {
+			largestNum = vec[i];
+		};
+	};
+	cout << "The largest number in the list is " << largestNum << endl;
+};
+
+void smallestNum(vector<double>& vec) {
+	double smallestNum{ vec[0] };
+	for (size_t i{ 1 }; i < vec.size(); i++) {
+		if (vec[i] < smallestNum) {
+			smallestNum = vec[i];
+		};
+	};
+	cout << "The smallest number in the list is " << smallestNum << endl;
+};
+
+void meanOfNums(vector<double>& vec) {
+	double runningTotal{};
+	double average{};
+
+	for (size_t i{}; i < vec.size(); i++) {
+		runningTotal += vec[i];
+	};
+
+	average = runningTotal / vec.size();
+	cout << "The average of all numbers in the list is: " << average << endl << endl;
+};
+
+void printList(const vector<double>& vec) {
+	for (size_t i{}; i < vec.size(); i++) {
+		if (i < vec.size() - 1) {
+			cout << vec[i] << ", ";
+		}
+		else {
+			cout << vec[i];
+		};
+	};
+	cout << endl << endl << endl;
+};
